@@ -4,7 +4,7 @@ from tkinter import ttk
 from numba import njit
 
 
-#Принимает два масива векторов, возвращает евклидово расстояние.
+# Принимает два масива векторов, возвращает евклидово расстояние.
 @njit
 def evclid_dist(vector1, vector2):
     return np.sqrt(np.sum((vector1 - vector2)**2))
@@ -59,11 +59,11 @@ class Calculate:
                 if dist > self.__max_distans[2]:
                     self.__max_distans[0] = i
                     self.__max_distans[1] = j
-                    self.__max_distans[2] = dist
+                    self.__max_distans[2] = round(dist, 8)
                 elif dist < self.__min_distans[2]:
                     self.__min_distans[0] = i
                     self.__min_distans[1] = j
-                    self.__min_distans[2] = dist
+                    self.__min_distans[2] = round(dist, 8)
 
         # Сортируем словарь для построения гистограммы.
         sorted_dist_dict = collections.OrderedDict(sorted(dist_dict.items()))
