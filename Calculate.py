@@ -1,7 +1,13 @@
 import numpy as np
 import collections
 from tkinter import ttk
+from numba import njit
 
+
+#Принимает два масива векторов, возвращает евклидово расстояние.
+@njit
+def evclid_dist(vector1, vector2):
+    return np.sqrt(np.sum((vector1 - vector2)**2))
 
 class Calculate:
     __min_distans = np.zeros((1, 3), dtype=float)  # Индексы 0 и 1 - пары векторов, 2 - их расстояние.
@@ -25,7 +31,7 @@ class Calculate:
     def calc_dist(self, vector, res_window):
         self.__min_distans = [0, 0, 100]
         self.__max_distans = [0, 0, 0]
-        dist_dict = {}  # Ключ - округленное расстояние, значение - сколько раз расстояние попадается.
+        dist_dict = {}  # Ключ - округленное расстояние, значение - частота.
         size_vector = len(vector)
 
         # Создает виджет процесса расчетов.
@@ -41,7 +47,7 @@ class Calculate:
                 progress_bar.update()
 
             for j in range(i + 1, size_vector):
-                dist = np.linalg.norm(vector[i] - vector[j])  # Содержит расстояние между переданной парой векторов.
+                dist = evclid_dist(vector[i], vector[j])
 
                 # Формирует словарь с данными для гистограммы.
                 if dist_dict.get(round(dist, 1)) == None:
